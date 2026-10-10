@@ -139,7 +139,7 @@ end
 
 function Daily:addToMainMenu(menu_items)
     menu_items.daily_literature = {
-        text = "每日文学推荐", sorting_hint = "more_tools",
+        text = "每日文学推荐", sorting_hint = "tools",
         sub_item_table = {
             { text = "立即同步", callback = function()
                 NetworkMgr:runWhenConnected(function() self:sync(true) end)
