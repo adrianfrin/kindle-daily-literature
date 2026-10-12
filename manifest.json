@@ -1,8 +1,14 @@
 {
   "version": 1,
   "feed_title": "每日文学哲学推荐",
-  "updated": "2026-10-11",
+  "updated": "2026-10-12",
   "articles": [
+    {
+      "date": "2026-10-12",
+      "title": "陶渊明辞官以后，真的获得自由了吗？",
+      "path": "articles/2026-10-12.html",
+      "sha": "80bf3af092154f15bf99f076fe5e6efbcc80b1e2"
+    },
     {
       "date": "2026-10-11",
       "title": "为什么一场争取自由的爱情，最后让一个人无路可走？",
