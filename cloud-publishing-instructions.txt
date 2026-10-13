@@ -1,12 +1,16 @@
 在原来的“文学哲学推荐”云端定时任务中保留原有选题、文章要求和执行时间，仅追加下列发布要求：
 
-每次文章完成后，把本次新生成的文学哲学推荐发布到我已授权的公开 GitHub 仓库 adrianfrin/kindle-daily-literature，默认分支 master。只发布本次文章，不发布聊天历史、账户资料、插件配置、设备信息或任何凭证。
+每次文章完成后，把本次新生成的文学哲学推荐发布到已授权的 GitHub 仓库 adrianfrin/kindle-daily-literature，分支 master。只发布文章正文和参考链接，不发布聊天历史、账户资料、插件配置、设备信息或任何凭证。
 
-使用 Asia/Shanghai 当日日期 YYYY-MM-DD，在 articles/YYYY-MM-DD.html 写入完整 UTF-8 HTML。保留完整标题、自然段、必要的小标题和真实可核查的参考链接。正文必须与本次推荐一致，不截断，不改成摘要，不插入内部引用标记。HTML 包含 <!DOCTYPE html>、<html lang="zh-CN">、<meta charset="utf-8">、<title>、<body>、<h1> 和正常 <p> 段落，并以 </html> 结束。所有文本转义正确；使用字体相对大小和简洁样式，不含 JavaScript、追踪器、登录信息或外部图片。
+使用 Asia/Shanghai 当日日期 YYYY-MM-DD 作为归档日期。将完整 UTF-8 Markdown 写入 articles/文章完整标题.md。保留完整标题、全部自然段、必要小标题和真实参考链接，不截断，不改成摘要，不插入内部引用标记。
 
-先读取当天目标文件是否已存在，再用 GitHub create_file 或 update_file 提交文章。更新文件前读取最新 blob SHA。同一文件的写入必须按顺序执行。不要重复创建仓库、分支或改变任何应用权限。
+文件名保留中文和常用标点。将 /、\、:、*、?、"、<、>、| 分别替换为 ／、＼、：、＊、？、＂、＜、＞、｜；移除控制字符、首尾空格和末尾句点，统一扩展名 .md。使用 Unicode NFC 规范化，检查大小写不敏感的路径冲突及文件名字节长度。标题正文保持原样。如果不同文章映射到同一路径，不得覆盖另一篇文章；添加归档日期后缀，并报告冲突。
 
-文章写入成功后，使用 GitHub fetch_file 读取当天文件的 blob SHA（sha，不是 commit_sha）。然后读取并更新 manifest.json，保留最新 60 篇有效条目，按日期从新到旧排序，同一天只保留一条。目录格式如下：
-{"version":1,"feed_title":"每日文学哲学推荐","updated":"YYYY-MM-DD","articles":[{"date":"YYYY-MM-DD","title":"文章完整标题","path":"articles/YYYY-MM-DD.html","sha":"文章文件的40位Git blob SHA"}]}
+先读取目标文件是否已存在，再创建或更新文章。更新前读取最新 blob SHA，同一文件的写入按顺序执行。不要重复创建仓库、分支或改变应用权限。
 
-目录更新前必须读取最新 manifest.json 的 blob SHA。只有文章发布成功才能更新目录；只有文章和目录均成功后才能报告“已同步到 Kindle 日报仓库”。若工具不允许写入、连接缺失或发生错误，请保留已生成文章，明确报告失败原因，不虚报已推送，不改用需要我电脑开机的本地定时任务。
+文章写入成功后，重新读取文章文件的最新 blob SHA（sha，不是 commit_sha）。然后读取并更新 manifest.json，保留最新最多 60 条有效记录，按日期倒序，同一天仅一条。目录格式如下：
+{"version":1,"feed_title":"每日文学哲学推荐","updated":"YYYY-MM-DD","articles":[{"date":"YYYY-MM-DD","title":"文章完整标题","path":"articles/文章完整标题.md","sha":"文章文件的40位Git blob SHA"}]}
+
+目录更新前读取最新 manifest.json 的 blob SHA。如果当天标题变化，先确认新文章和目录均已成功更新，再读取旧文件最新 SHA 并删除当天被替换的旧文章。历史 HTML 只有在完整 Markdown 已写入且正文和参考链接核对成功后才能删除；删除前读取最新 blob SHA。不得删除 manifest.json 或无关文件。
+
+只有文章和目录均成功后才能报告“已同步到文章仓库”。若权限、连接或写入失败，保留已生成文章，明确报告失败原因，不虚报已推送，不改用本地定时任务。
