@@ -18,10 +18,13 @@
 
 ## 每周文学深读与 Agent 迁移
 
+- [文学／哲学通用方法手册](agents/literature-philosophy-agent-playbook.md)：完整保留此前方法正文、评分、七幕结构、编辑、配置示例与核心 Prompt；开头注明如何适配当前任务。
 - [文学推荐 Agent 规范](agents/weekly-literature-agent.md)：选材、三书联结、去重、研究核验、长篇评论、细读、完整提示词、发布与迁移。
 - [方法变更日志](agents/weekly-literature-changelog.md)：只记录实质策略修订，不每周重写规范。
 - [推荐历史](weekly-literature/history.jsonl)：长期三书与切入问题记录，供跨 Agent 去重；不受 manifest 最近 60 条限制。
 - [周刊索引](weekly-literature/manifest.json)：沿用 v1 的日期、标题、路径与文章 blob SHA；仅登记已核实的正文。初始化为空，不代表旧稿已归档。
+
+使用顺序：先读周刊规范与通用手册的接入说明，再读通用方法、完整推荐历史和近期文章。通用手册解释怎么写，周刊规范规定本任务怎么执行。旧稿的字数、主题轮换和单主作品建议不覆盖当前持续存在主义主线、固定三书与不设默认字数的要求。
 
 截至 2026-10-20，原「每周文学深读推荐」已合并为「存在主义与文学深读」，仍在周六北京时间 08:00 执行，每期保留三部文学作品（一部重点细读、两部实质对照）。合并模式继续使用 `articles/` 和根目录 manifest，周刊索引引用同一正文。规范另保留独立三书模式，使用 `weekly-literature/articles/` 与周刊索引，避免与日报同日记录冲突；该模式不另行开启重复的内容任务。
 
